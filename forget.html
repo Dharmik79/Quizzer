@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Forget Form</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
+	<script src="https://kit.fontawesome.com/a81368914c.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
+ <script>
+   // Initialize Firebase
+   var config = {
+  apiKey: "AIzaSyDtUImO9odoRI7Uirmx5J3J_viyzZNbPdo",
+  authDomain: "tester-69219.firebaseapp.com",
+  databaseURL: "https://tester-69219.firebaseio.com",
+  projectId: "tester-69219",
+  storageBucket: "tester-69219.appspot.com",
+  messagingSenderId: "161983156214",
+  appId: "1:161983156214:web:89d698a196c98b35d0c1d7"
+   };
+
+   firebase.initializeApp(config);
+ </script>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+	<img class="wave" src="img/wave.png">
+	<div class="container">
+		<div class="img">
+			<img src="img/bg.svg">
+		</div>
+		<div class="login-content">
+			<form action="forget.html">
+				<img src="img/avatar.svg">
+				<h2 class="title">Forget Password</h2>
+           		<div class="input-div one">
+           		   <div class="i">
+           		   		<i class="fas fa-user"></i>
+           		   </div>
+           		   <div class="div">
+           		   		<h5>Email</h5>
+           		   		<input type="text" class="input" id="username" required>
+           		   </div>
+           		</div>
+           			<div class="input-div pass">
+           		   <div class="i"> 
+           		    	<i class="fas fa-lock"></i>
+           		   </div>
+           		   <div class="div">
+           		    	<h5>New Password</h5>
+           		    	<input type="password" class="input" id="password" required>
+            	   </div>
+            	</div>
+            	<div class="input-div pass">
+           		   <div class="i"> 
+           		    	<i class="fas fa-lock"></i>
+           		   </div>
+           		   <div class="div">
+           		    	<h5>Confirm Password</h5>
+           		    	<input type="password" class="input" id="confirmpassword" required>
+            	   </div>
+            	   
+            	</div>
+           		<div class="input-div pass">
+           		   <div class="i"> 
+           		    	<i class="fas fa-calendar"></i>
+           		   </div>
+           		   <div class="div">
+           		    	<h5>Date of Birth</h5>
+           		    	<input type="text" class="input" id="dob" required>
+            	   </div>
+            	   
+            	</div>
+           		
+            	<input type="button" class="btn" value="SUBMIT" onclick="forg();"/>
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript" src="js/main.js"></script>
+    <script>
+    var databaseRef = firebase.database().ref('users/');
+        
+function forg()
+{
+var username = document.getElementById('username').value;
+var password = document.getElementById('password').value;
+    var confirmpassword = document.getElementById('confirmpassword').value;
+  var dob = document.getElementById('dob').value;
+   
+   databaseRef.once('value', function(snapshot) {
+    snapshot.forEach(function(childSnapshot) {
+   var childKey = childSnapshot.key;
+   var childData = childSnapshot.val();
+        
+        var user1=childData.user_id;
+        var dob1=childData.dob;
+        
+        if(username==user1 && dob==dob1 && password==confirmpassword)
+            {
+                var data = {
+    user_id:user1,
+    password: password,
+    dob:dob1
+   }
+                var updates = {};
+   updates['/users/' + username] = data;
+   firebase.database().ref().update(updates); window.location.assign('\login.html');
+            }
+        
+    }); 
+       
+       
+});
+    
+}
+            
+
+    </script>
+</body>
+</html>

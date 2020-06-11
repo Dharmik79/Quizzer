@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Quizzer</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
+	<script src="https://kit.fontawesome.com/a81368914c.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
+ <script>
+   // Initialize Firebase
+   var config = {
+  apiKey: "AIzaSyDtUImO9odoRI7Uirmx5J3J_viyzZNbPdo",
+  authDomain: "tester-69219.firebaseapp.com",
+  databaseURL: "https://tester-69219.firebaseio.com",
+  projectId: "tester-69219",
+  storageBucket: "tester-69219.appspot.com",
+  messagingSenderId: "161983156214",
+  appId: "1:161983156214:web:89d698a196c98b35d0c1d7"
+   };
+
+   firebase.initializeApp(config);
+ </script>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+	<img class="wave" src="img/wave.png">
+	<div class="container">
+		<div class="img">
+			<img src="img/bg.svg">
+		</div>
+		<div class="login-content">
+			<form action="#">
+				
+				<h2 class="title">Quizzer</h2>
+           		
+           		<input class="btn" id="create Quiz" onclick="createquiz();" cursor="pointer" value="Create Quiz" type="button">
+           		<button class="btn" id="Quiz" onclick="quizzer();" cursor="pointer">Quiz</button>
+           		<button class="btn" id="signout" onclick="sigout();" cursor="pointer">SIGNOUT</button>
+           		
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript" src="js/main.js"></script>
+    <script>
+   
+function createquiz()
+{
+window.location.assign('\createquiz.html');
+}
+
+
+window.addEventListener('load',(event)=>{
+   var signout=document.getElementById('signout');
+     firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    signout.style.display="block";
+       console.log(user);
+  } else {
+    // No user is signed in.
+      signout.style.display="none";
+  }
+});
+
+});
+    
+function sigout(){
+     firebase.auth().signOut().then(function() {
+  alert("Sign out successful");
+}).catch(function(error) {
+  alert("signout not successful");
+});
+}
+ 
+function quizzer()
+{
+window.location.assign('\quiz.html');
+}
+
+    </script>
+</body>
+</html>
