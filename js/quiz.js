@@ -12,19 +12,21 @@ snapshot.forEach(function(childSnapshot){
         var html="";
     if(childData=="true")
         {
-            
-         
-
-            
-            
+             
 	var el=document.createElement("div");
             el.className="column";
     var el1=document.createElement("div");
-            el1.className="card";
-    el1.append(childData1);
+            el1.className="card ";
+            el1.setAttribute("id",childData1);
+  var a = document.createElement('a'); 
+            a.className="a";
+            var link = document.createTextNode(childData1);
+            a.appendChild(link);  
+         a.href="https://www.geeksforgeeks.org";
+            el1.appendChild(a);     
             el.append(el1);
             quiz.append(el);
-
+ 
         }
         
         
