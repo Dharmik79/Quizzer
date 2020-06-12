@@ -1,12 +1,21 @@
+ var questions = [
+  
+    
+    {
+    question: "Inside which HTML element do we put the JavaScript??",
+    choice1: "<script>",
+    choice2: "<javascript>",
+    choice3: "<js>",
+    choice4: "<scripting>",
+    answer: 1,
+    as:"false",
+    again:"false"
+  }
+  
+];
 window.addEventListener('load',(event)=>{
     
-    var query=window.location.search;
-   var qu=query.indexOf("=");
-      query=query.substr(qu+1,);
-    query=decodeURI(query);
-    var u=query.indexOf('/');
-    var username=query.substring(0,u);
-    var name=query.substring(u+1,);
+   
  
     firebase.auth().onAuthStateChanged(function(user) {
        
@@ -18,25 +27,7 @@ window.addEventListener('load',(event)=>{
   }
 });
 });
- var starCountRef = firebase.database().ref('Quizz/'+username+'/'+name);
-starCountRef.on('value', function(snapshot) {
-snapshot.forEach(function(childSnapshot){
-  
-    
-    childSnapshot.forEach(function(quizsnapshot){
-      var childData1=quizsnapshot.val().nameofquiz;  
-    var childData=quizsnapshot.val().perfect;
-    console.log("total questions"+childData);
-       
-   
-        
-        
-    });
-    
-});
-    
-    });
-
+ 
 const question=document.getElementById('question');
 const choices = Array.from(document.getElementsByClassName("choice-text"));
 const questionCounterText=document.getElementById('questionCounter');
@@ -55,39 +46,7 @@ let questionCounter=0;
 let availableQuestions=[];
 
 
-let questions = [
-  {
-    question: "Inside which HTML element do we put the JavaScript??",
-    choice1: "<script>",
-    choice2: "<javascript>",
-    choice3: "<js>",
-    choice4: "<scripting>",
-    answer: 1,
-    as:"false",
-    again:"false"
-  },
-  {
-    question:
-      "What is the correct syntax for referring to an external script called 'xxx.js'?",
-    choice1: "<script href='xxx.js'>",
-    choice2: "<script name='xxx.js'>",
-    choice3: "<script src='xxx.js'>",
-    choice4: "<script file='xxx.js'>",
-    answer: 3,
-    as:"false",
-    again:"false"
-  },
-  {
-    question: " How do you write 'Hello World' in an alert box?",
-    choice1: "msgBox('Hello World');",
-    choice2: "alertBox('Hello World');",
-    choice3: "msg('Hello World');",
-    choice4: "alert('Hello World');",
-    answer: 4,
-    as:"false",
-    again:"false"
-  }
-];
+
 
 
 const CORRECT_BONUS=10;
@@ -95,18 +54,62 @@ const MAX_QUESTIONS=3;
 let selectedoptions=[];
 let answers=[];
 startGame=()=>{
+     var query=window.location.search;
+   var qu=query.indexOf("=");
+      query=query.substr(qu+1,);
+    query=decodeURI(query);
+    var u=query.indexOf('/');
+    var usern=query.substring(0,u);
+    var name=query.substring(u+1,);
+    
+    
+    var starCountRef = firebase.database().ref('Quizz/'+usern+'/'+name+'/questions/');
+starCountRef.on('value', function(snapshot) {
+    
+snapshot.forEach(function(childSnapshot){
+   var quest=childSnapshot.val().question;
+    var ans=childSnapshot.val().answer;
+    var choice1=childSnapshot.val().choice1;
+    var choice2=childSnapshot.val().choice2;
+    var choice3=childSnapshot.val().choice3;
+    var choice4=childSnapshot.val().choice4;
+    
+  questions.push({
+      "question":quest,
+      "answer":ans,
+      "choice1":choice1,
+      "choice2":choice2,
+      "choice3":choice3,
+      "choice4":choice4,
+      as:"false",
+    again:"false"
+      
+  });
+    
+    
+    
+    
+});
+
+    
+    });
     questionCounter=0;
     score=0;
+    
     availableQuestions=[...questions];
+    
+    console.log(availableQuestions);
     
     getNewQuestion();
 };
 
 
 getNewQuestion=()=>{
-   
+   console.log(questions);
   questionCounterText.innerText = `${questionCounter+1}/${MAX_QUESTIONS}`;
 const questionIndex =questionCounter;
+    
+    
    if(questionCounter==0)
       {
            prev.style.display='none';
