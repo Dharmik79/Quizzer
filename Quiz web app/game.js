@@ -151,6 +151,7 @@ window.addEventListener('load',() =>{
 });
 });
 startGame=()=>{
+     document.getElementById("loader").style.display = "none";
   var hidi=document.getElementById('container');
     hidi.style.display="block";
     
