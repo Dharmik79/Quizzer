@@ -1,9 +1,5 @@
- var questions ={
-  
-    
-    questionstoread:[]
-  
- };
+ var questions =[
+ ];
 
 
 const question=document.getElementById('question');
@@ -25,23 +21,25 @@ let currentQuestion={};
     var u=query.indexOf('/');
     var usern=query.substring(0,u);
     var name=query.substring(u+1,);
-    
-    
-  
+   var starCountRef1 = firebase.database().ref('Quizz/'+usern+'/'+name+'/');
+var MAX_QUESTIONS;
+ starCountRef1.on('value', function(snapshot){
+   MAX_QUESTIONS=snapshot.val().total_questions; 
+    console.log(MAX_QUESTIONS);
+    });
 let score=0;
 let questionCounter=0;
 
 const CORRECT_BONUS=10;
 
-const MAX_QUESTIONS=2;
+
 let selectedoptions=[];
 let answers=[];
 
 
-
 getNewQuestion=()=>{
-console.log(questions['questionstoread']);
-  questionCounterText.innerText = `${questionCounter+1}/${MAX_QUESTIONS}`;
+console.log("Max_questions"+MAX_QUESTIONS);
+  questionCounterText.innerText = `${questionCounter+1}`;
 const questionIndex =questionCounter;
     
     
@@ -55,7 +53,7 @@ const questionIndex =questionCounter;
      console.log("Question Counter get New Question "+ questionCounter);
     
     
-  currentQuestion = questions['questionstoread'][questionIndex];
+  currentQuestion = questions[questionIndex];
   question.innerText = currentQuestion.question;
     if (questionCounter!=MAX_QUESTIONS-1)
         {
@@ -128,38 +126,41 @@ fin.addEventListener('click',e=>{
     if(questionCounter==MAX_QUESTIONS-1)
         {
             console.log(score);
-            localStorage.setItem('mostRecentScore',score);
+            
            if(confirm("Are you sure to end the quiz? ")){
-            return window.location
-               .assign('end.html');
+          window.location
+               .assign('end.html?'+score);
            }
-           
+    
         }
     
 });
 
-startGame=()=>{
-  
-    questionCounter=0;
-    score=0;
-   
-    getNewQuestion();
-};
+
 window.addEventListener('load',() =>{
     
-   
-  
     firebase.auth().onAuthStateChanged(function(user) {
        
   if (user) {
     window.current=user.email;
+     
      
   } else {
     window.location.assign('\login.html');
   }
 });
 });
+startGame=()=>{
+  var hidi=document.getElementById('container');
+    hidi.style.display="block";
+    
+    questionCounter=0;
+    score=0;
+   
+    getNewQuestion();
+};
    var starCountRef = firebase.database().ref('Quizz/'+usern+'/'+name+'/questions/');
+let q=0;
 starCountRef.on('value', function(snapshot) {
     
 snapshot.forEach(function(childSnapshot){
@@ -170,8 +171,8 @@ snapshot.forEach(function(childSnapshot){
     var choice2=childSnapshot.val().choice2;
     var choice3=childSnapshot.val().choice3;
     var choice4=childSnapshot.val().choice4;
-    
-  questions['questionstoread'].push({
+    q++;
+  questions.push({
       "question":quest,
       "answer":ans,
       "choice1":choice1,
@@ -182,13 +183,19 @@ snapshot.forEach(function(childSnapshot){
     again:"false"
       
   });
-  
+
     
     
     
 });
-
+    
+if(questions.length==q)
+    {
+        startGame();
+    }
     
     });
 
-startGame();
+
+
+

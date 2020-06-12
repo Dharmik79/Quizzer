@@ -54,14 +54,30 @@ var ans=document.getElementById('ans').value;
         {
           
     if(ans=="A" ||ans=="B" ||ans=="C" ||ans=="D" )
-    {
+    {var answ;
+        if(ans=='A')
+            {
+                answ=1;
+            }
+     if(ans=='B')
+            {
+                answ=2;
+            }
+     if(ans=='C')
+            {
+                answ=3;
+            }
+     if(ans=='D')
+            {
+                answ=4;
+            }
         var data = {
     question:question,
     choice1:ans1,
         choice2:ans2,
             choice3:ans3,
             choice4:ans4,
-            answer:ans
+            answer:answ
    }
         var z=counter;
        
@@ -90,7 +106,7 @@ var ans=document.getElementById('ans').value;
     choice2:ans2,
     choice3:ans3,
     choice4:ans4,
-    answer:ans
+    answer:answ
         });
         if(z==ttq)
             {
