@@ -1,33 +1,11 @@
- var questions = [
+ var questions ={
   
     
-    {
-    question: "Inside which HTML element do we put the JavaScript??",
-    choice1: "<script>",
-    choice2: "<javascript>",
-    choice3: "<js>",
-    choice4: "<scripting>",
-    answer: 1,
-    as:"false",
-    again:"false"
-  }
+    questionstoread:[]
   
-];
-window.addEventListener('load',(event)=>{
-    
-   
- 
-    firebase.auth().onAuthStateChanged(function(user) {
-       
-  if (user) {
-    window.current=user.email;
-     
-  } else {
-    window.location.assign('\login.html');
-  }
-});
-});
- 
+ };
+
+
 const question=document.getElementById('question');
 const choices = Array.from(document.getElementsByClassName("choice-text"));
 const questionCounterText=document.getElementById('questionCounter');
@@ -40,21 +18,7 @@ const choice3=document.getElementById('choice3');
 const choice4=document.getElementById('choice4');
 let acceptingAnswers = false;
 let currentQuestion={};
-
-let score=0;
-let questionCounter=0;
-let availableQuestions=[];
-
-
-
-
-
-const CORRECT_BONUS=10;
-const MAX_QUESTIONS=3;
-let selectedoptions=[];
-let answers=[];
-startGame=()=>{
-     var query=window.location.search;
+ var query=window.location.search;
    var qu=query.indexOf("=");
       query=query.substr(qu+1,);
     query=decodeURI(query);
@@ -63,49 +27,20 @@ startGame=()=>{
     var name=query.substring(u+1,);
     
     
-    var starCountRef = firebase.database().ref('Quizz/'+usern+'/'+name+'/questions/');
-starCountRef.on('value', function(snapshot) {
-    
-snapshot.forEach(function(childSnapshot){
-   var quest=childSnapshot.val().question;
-    var ans=childSnapshot.val().answer;
-    var choice1=childSnapshot.val().choice1;
-    var choice2=childSnapshot.val().choice2;
-    var choice3=childSnapshot.val().choice3;
-    var choice4=childSnapshot.val().choice4;
-    
-  questions.push({
-      "question":quest,
-      "answer":ans,
-      "choice1":choice1,
-      "choice2":choice2,
-      "choice3":choice3,
-      "choice4":choice4,
-      as:"false",
-    again:"false"
-      
-  });
-    
-    
-    
-    
-});
+  
+let score=0;
+let questionCounter=0;
 
-    
-    });
-    questionCounter=0;
-    score=0;
-    
-    availableQuestions=[...questions];
-    
-    console.log(availableQuestions);
-    
-    getNewQuestion();
-};
+const CORRECT_BONUS=10;
+
+const MAX_QUESTIONS=2;
+let selectedoptions=[];
+let answers=[];
+
 
 
 getNewQuestion=()=>{
-   console.log(questions);
+console.log(questions['questionstoread']);
   questionCounterText.innerText = `${questionCounter+1}/${MAX_QUESTIONS}`;
 const questionIndex =questionCounter;
     
@@ -120,7 +55,7 @@ const questionIndex =questionCounter;
      console.log("Question Counter get New Question "+ questionCounter);
     
     
-  currentQuestion = availableQuestions[questionIndex];
+  currentQuestion = questions['questionstoread'][questionIndex];
   question.innerText = currentQuestion.question;
     if (questionCounter!=MAX_QUESTIONS-1)
         {
@@ -188,6 +123,7 @@ next.addEventListener('click',()=>{
    questionCounter++;
     getNewQuestion();
 });
+
 fin.addEventListener('click',e=>{
     if(questionCounter==MAX_QUESTIONS-1)
         {
@@ -201,5 +137,58 @@ fin.addEventListener('click',e=>{
         }
     
 });
+
+startGame=()=>{
+  
+    questionCounter=0;
+    score=0;
+   
+    getNewQuestion();
+};
+window.addEventListener('load',() =>{
+    
+   
+  
+    firebase.auth().onAuthStateChanged(function(user) {
+       
+  if (user) {
+    window.current=user.email;
+     
+  } else {
+    window.location.assign('\login.html');
+  }
+});
+});
+   var starCountRef = firebase.database().ref('Quizz/'+usern+'/'+name+'/questions/');
+starCountRef.on('value', function(snapshot) {
+    
+snapshot.forEach(function(childSnapshot){
+    console.log(childSnapshot.val())
+   var quest=childSnapshot.val().question;
+    var ans=childSnapshot.val().answer;
+    var choice1=childSnapshot.val().choice1;
+    var choice2=childSnapshot.val().choice2;
+    var choice3=childSnapshot.val().choice3;
+    var choice4=childSnapshot.val().choice4;
+    
+  questions['questionstoread'].push({
+      "question":quest,
+      "answer":ans,
+      "choice1":choice1,
+      "choice2":choice2,
+      "choice3":choice3,
+      "choice4":choice4,
+      as:"false",
+    again:"false"
+      
+  });
+  
+    
+    
+    
+});
+
+    
+    });
 
 startGame();
