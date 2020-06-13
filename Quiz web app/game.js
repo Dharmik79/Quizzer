@@ -25,7 +25,7 @@ let currentQuestion={};
 var MAX_QUESTIONS;
  starCountRef1.on('value', function(snapshot){
    MAX_QUESTIONS=snapshot.val().total_questions; 
-    console.log(MAX_QUESTIONS);
+  
     });
 let score=0;
 let questionCounter=0;
@@ -38,8 +38,8 @@ let answers=[];
 
 
 getNewQuestion=()=>{
-console.log("Max_questions"+MAX_QUESTIONS);
-  questionCounterText.innerText = `${questionCounter+1}`;
+MAX_QUESTIONS=q;
+  questionCounterText.innerText = `${questionCounter+1}/${MAX_QUESTIONS}`;
 const questionIndex =questionCounter;
     
     

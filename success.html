@@ -23,6 +23,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
+<div id="loader"></div>
+<div id="conatiner" style="display: none">
+    
+
 	<img class="wave" src="img/wave.png">
 	<div class="container">
 		<div class="img">
@@ -39,20 +43,23 @@
            		
             </div>
         </div>
+        </div>
     </div>
     <script type="text/javascript" src="js/main.js"></script>
     <script>
-   
-function createquiz()
-{
-window.location.assign('\createquiz.html');
-}
-
+   var loader=document.getElementById('loader');
+    var container=document.getElementById('conatiner');
+        
 
 window.addEventListener('load',(event)=>{
+    
+    
+    
    var signout=document.getElementById('signout');
      firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
+      loader.style.display="none";
+      container.style.display="block";
     signout.style.display="block";
        console.log(user);
   } else {
@@ -63,6 +70,12 @@ window.addEventListener('load',(event)=>{
 
 });
     
+        function createquiz()
+{
+window.location.assign('\createquiz.html');
+}
+
+
 function sigout(){
      firebase.auth().signOut().then(function() {
   alert("Sign out successful");
@@ -76,6 +89,12 @@ function quizzer()
 window.location.assign('\quiz.html');
 }
 
+    </script>
+      <script type="text/javascript">
+        history.pushState(null, null, location.href);
+        history.back();
+        history.forward();
+        window.onpopstate = function () { history.go(1); };
     </script>
 </body>
 </html>

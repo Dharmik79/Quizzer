@@ -29,7 +29,7 @@
 			<img src="img/bg.svg">
 		</div>
 		<div class="login-content">
-			<form action="success.html">
+			<form >
 				<img src="img/avatar.svg">
 				<h2 class="title">Login</h2>
            		<div class="input-div one">
@@ -56,7 +56,14 @@
             </form>
         </div>
     </div>
+   
     <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript">
+        history.pushState(null, null, location.href);
+        history.back();
+        history.forward();
+        window.onpopstate = function () { history.go(1); };
+    </script>
     <script>
     var databaseRef = firebase.database().ref('users/');
 function login()
@@ -67,6 +74,7 @@ var username = document.getElementById('username').value;
     firebase.auth().signInWithEmailAndPassword(username, password).then(function(){
         
        window.location.assign('\success.html');
+        
    }).catch(function(error) {
   // Handle Errors here.
   var errorCode = error.code;
@@ -79,5 +87,6 @@ var username = document.getElementById('username').value;
             
 
     </script>
+     
 </body>
 </html>

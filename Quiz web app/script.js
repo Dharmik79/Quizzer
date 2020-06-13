@@ -1,8 +1,10 @@
+
 window.addEventListener('load',(event)=>{
     firebase.auth().onAuthStateChanged(function(user) {
        
   if (user) {
     window.current=user.email;
+      
      
   } else {
     window.location.assign('\login.html');

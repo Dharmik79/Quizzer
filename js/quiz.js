@@ -1,14 +1,19 @@
-
 window.addEventListener('load',(event)=>{
-    firebase.auth().onAuthStateChanged(function(user) {
-       
+   firebase.auth().onAuthStateChanged(function(user) {
+      
   if (user) {
+      
+        
     window.current=user.email;
+      loader.style.display="none";
+    
      
   } else {
     window.location.assign('\login.html');
   }
 });
+    
+    }); 
     var quiz=document.getElementById('row');
    var starCountRef = firebase.database().ref('Quizz');
 starCountRef.on('value', function(snapshot) {
@@ -22,7 +27,7 @@ snapshot.forEach(function(childSnapshot){
         var html="";
     if(childData=="true")
         {
-             
+             container.style.display="block";
 	var el=document.createElement("div");
             el.className="column";
     var el1=document.createElement("div");
@@ -49,4 +54,4 @@ snapshot.forEach(function(childSnapshot){
     
     });
 
-}); 
+
