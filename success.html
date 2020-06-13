@@ -39,6 +39,7 @@
            		
            		<input class="btn" id="create Quiz" onclick="createquiz();" cursor="pointer" value="Create Quiz" type="button">
            		<button class="btn" id="Quiz" onclick="quizzer();" cursor="pointer">Quiz</button>
+           		<button class="btn" id="myscore" onclick="myscore();" cursor="pointer" style="display: none">My Score</button>
            		<button class="btn" id="signout" onclick="sigout();" cursor="pointer">SIGNOUT</button>
            		
             </div>
@@ -54,12 +55,12 @@
 window.addEventListener('load',(event)=>{
     
     
-    
+    var myscore=document.getElementById('myscore');
    var signout=document.getElementById('signout');
-     firebase.auth().onAuthStateChanged(function(user) {
+       loader.style.display="none";
+      container.style.display="block";firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
-      loader.style.display="none";
-      container.style.display="block";
+    myscore.style.display="block";
     signout.style.display="block";
        console.log(user);
   } else {
@@ -84,6 +85,10 @@ function sigout(){
 });
 }
  
+        function myscore()
+        {
+            window.location.assign('\myscore.html');
+        }
 function quizzer()
 {
 window.location.assign('\quiz.html');

@@ -129,7 +129,7 @@ fin.addEventListener('click',e=>{
             
            if(confirm("Are you sure to end the quiz? ")){
           window.location
-               .assign('end.html?'+score);
+               .assign("end.html?"+name+"/"+score);
            }
     
         }

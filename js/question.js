@@ -13,7 +13,17 @@ var next=document.getElementById('next');
 var fin=document.getElementById('fin');
 
 let counter=0;
-const ttq=localStorage.getItem("totalQuestions"); 
+ var query=window.location.search;
+   var qu=query.indexOf("?");
+      query=query.substr(qu+1,);
+    query=decodeURI(query);
+    var u=query.indexOf('/');
+    var usern=query.substring(0,u);
+    var na=query.substring(u+1,);
+
+const ttq=na; 
+console.log(na);
+console.log(usern);
     
 window.addEventListener('load',(event)=>{
    firebase.auth().onAuthStateChanged(function(user) {
@@ -34,7 +44,7 @@ function next1(){
     
     console.log(navigator.onLine);
     console.log(counter);
-currentQuiz=localStorage.getItem("nameofQuiz");
+currentQuiz=usern;
     
     if(counter<=ttq)
         { 
@@ -133,7 +143,7 @@ function hideing(){
 }
 function fini()
 {
-    var qu=localStorage.getItem('nameofQuiz');
+    var qu=usern;
     var nu=window.current.indexOf("@");
        var users1=window.current.slice(0,nu);
     console.log(users1);
@@ -141,22 +151,11 @@ function fini()
     
     
     quizze='Quizz/'+users1+'/'+qu+'/'; 
-   /* var starCountRef = firebase.database().ref(quizze);
-starCountRef.on('value', function(snapshot) {
-  var length_of_question=(snapshot.val().length);
-    if((length_of_question-1)==ttq)
-        {
-             
-        }
-    else{
-        
-    }
-    });
-    */
+ 
     
     firebase.database().ref(quizze).update({ perfect: "true" });
     window.location.assign('\success.html');
-   alert("your quiz is successfully saved");
+   alert("your quiz "+qu+" is successfully saved");
 
   // 
 }

@@ -37,16 +37,15 @@ var totalquestions=document.getElementById('number_of_question').value;
         
         var n=username.indexOf("@");
        var user1=username.slice(0,n);
-              
-   localStorage.setItem("nameofQuiz",nameofquiz);
-localStorage.setItem("totalQuestions",totalquestions);      
+       
              
    firebase.database().ref('/Quizz/' + user1+"/"+nameofquiz).set({
        nameofquiz:nameofquiz,
     total_questions:totalquestions,
        perfect:"false"
    }).then(function(){
-       window.location.assign('\questions.html');
+       
+       window.location.assign("\questions.html?"+nameofquiz+"/"+totalquestions);
    });
    
 

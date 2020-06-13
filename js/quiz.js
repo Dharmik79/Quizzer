@@ -29,7 +29,7 @@ snapshot.forEach(function(childSnapshot){
         {
              container.style.display="block";
 	var el=document.createElement("div");
-            el.className="column";
+            el.className="column w3-animate-top";
     var el1=document.createElement("div");
             el1.className="card ";
             var nu=window.current.indexOf("@");
