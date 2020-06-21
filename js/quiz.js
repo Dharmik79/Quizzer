@@ -40,7 +40,7 @@ snapshot.forEach(function(childSnapshot){
             a.className="a";
             var link = document.createTextNode(childData1);
             a.appendChild(link);  
-         a.href="/Quiz web app/index.html?id="+users1+"/"+childData1;
+         a.href="index.html?id="+users1+"/"+childData1;
             el1.appendChild(a);     
             el.append(el1);
             quiz.append(el);

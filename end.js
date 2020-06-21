@@ -32,7 +32,7 @@ function sub(){
             nameofquiz:nameofquiz
         }).then(function(){
             
-           window.location.assign('../success.html'); 
+           window.location.assign('success.html'); 
         });
       
       
